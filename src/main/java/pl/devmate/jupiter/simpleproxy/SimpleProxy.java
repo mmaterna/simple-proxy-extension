@@ -15,6 +15,15 @@
  */
 package pl.devmate.jupiter.simpleproxy;
 
+import pl.devmate.jupiter.simpleproxy.events.ProxyEventsCaptured;
+
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
+
+/**
+ * Utility class with static access to registered JUnit Jupiter extension {@link SimpleProxyExtension}.
+ */
 public class SimpleProxy {
 
     public static final String SIMPLE_PROXY_VISITED_HEADER = "simple-proxy-visited";
@@ -32,16 +41,46 @@ public class SimpleProxy {
         this.simpleProxyServer = simpleProxyServer;
     }
 
-    public static SimpleProxyContext context() {
-        SimpleProxyServer simpleProxyServerInstance = defaultInstance.get().simpleProxyServer;
-        if (simpleProxyServerInstance == null) {
-            throw new IllegalStateException("Simple proxy server not started");
-        }
-        return simpleProxyServerInstance.context();
+    public static SimpleProxyRuntimeInfo runtimeInfo() {
+        return runningSimpleProxyServer().runtimeInfo();
+    }
+
+    public static ProxyEventsCaptured eventsCaptured() {
+        return runningSimpleProxyServer().eventsCaptured();
     }
 
     static void currentProxyServer(SimpleProxyServer simpleProxyServer) {
         defaultInstance.set(new SimpleProxy(simpleProxyServer));
+    }
+
+    /* ============== helper methods ============== */
+    public static Proxy buildHttpProxy() {
+        return runningSimpleProxyServer().buildHttpProxy();
+    }
+
+    public static ProxySelector buildHttpProxySelector() {
+        return runningSimpleProxyServer().buildHttpProxySelector();
+    }
+
+    public static InetSocketAddress buildHttpInetSocketAddress() {
+        return runningSimpleProxyServer().buildHttpInetSocketAddress();
+    }
+
+    public static ProxySelector buildTlsProxySelector() {
+        return runningSimpleProxyServer().buildTlsProxySelector();
+    }
+
+    public static InetSocketAddress buildTlsInetSocketAddress() {
+        return runningSimpleProxyServer().buildTlsInetSocketAddress();
+    }
+
+
+    private static SimpleProxyServer runningSimpleProxyServer() {
+        SimpleProxyServer simpleProxyServerInstance = defaultInstance.get().simpleProxyServer;
+        if (simpleProxyServerInstance == null) {
+            throw new IllegalStateException("Simple proxy server not started");
+        }
+        return simpleProxyServerInstance;
     }
 
 }

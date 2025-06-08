@@ -15,23 +15,9 @@
  */
 package pl.devmate.jupiter.simpleproxy;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-class SimpleHttpProxyErrorsTest {
-
-    @Test
-    void staticContextShouldTrowWhenServerNotStarted() {
-        assertThrows(IllegalStateException.class, SimpleProxy::runtimeInfo);
-    }
-
-    @Test
-    void extensionContextShouldTrowWhenServerNotStarted() {
-        SimpleProxyConfig simpleProxyConfig = SimpleProxyConfig.DEFAULT;
-        SimpleProxyExtension simpleProxyExtension = new SimpleProxyExtension(simpleProxyConfig);
-
-        assertThrows(IllegalStateException.class, simpleProxyExtension::runtimeInfo);
-    }
+public record SimpleProxyRuntimeInfo(
+        Integer httpPort,
+        Integer httpsPort
+) {
 
 }

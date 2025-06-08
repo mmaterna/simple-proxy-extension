@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.devmate.jupiter.simpleproxy;
+package pl.devmate.jupiter.simpleproxy.events;
 
-public class SimpleProxyExtensionBuilder {
+import java.net.URI;
+import java.time.Instant;
 
-    private final SimpleProxyConfig builderConfig = new SimpleProxyConfig();
-
-    public SimpleProxyExtensionBuilder port(int port) {
-        builderConfig.setPort(port);
-        return this;
-    }
-
-    public SimpleProxyExtension build() {
-        return new SimpleProxyExtension(builderConfig);
-    }
+public record ProxyEventRequest (
+        Instant instant,
+        URI uri,
+        String method,
+        ProxyEventHttpHeaders headers,
+        byte[] requestBytes
+) {
 
 }

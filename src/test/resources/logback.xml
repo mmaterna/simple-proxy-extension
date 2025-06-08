@@ -15,7 +15,7 @@
     <logger name="org.eclipse.jetty.client.transport.HttpSender" level="info"/>
     <logger name="org.eclipse.jetty.client.transport.HttpReceiver" level="info"/>
     <logger name="org.eclipse.jetty.proxy.ProxyHandler" level="info"/>
-    <logger name="pl.devmate.simpleproxy" level="debug"/>
+    <logger name="pl.devmate.jupiter.simpleproxy" level="info"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

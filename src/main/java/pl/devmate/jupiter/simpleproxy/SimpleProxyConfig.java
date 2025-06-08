@@ -15,16 +15,28 @@
  */
 package pl.devmate.jupiter.simpleproxy;
 
-public class SimpleProxyConfig {
+/**
+ * Configuration parameters for SimpleProxy
+ * @param port port for http proxy, default {@code 0} (random port)
+ * @param addProxyResponseHeader should add header to response {@link SimpleProxy#SIMPLE_PROXY_VISITED_HEADER}, default {@code true}
+ * @param storeRequestBody should request body be captured in proxy events, default {@code false}
+ * @param storeResponseBody should response body be captured in proxy events, default {@code false}
+ */
+public record SimpleProxyConfig(
+        int port,
+        boolean addProxyResponseHeader,
+        boolean storeRequestBody,
+        boolean storeResponseBody) {
 
-    private int port = 0;
+    public static final SimpleProxyConfig DEFAULT = new SimpleProxyConfig(
+            0,
+            true,
+            false,
+            false
+    );
 
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+    public static SimpleProxyConfigBuilder builder() {
+        return new SimpleProxyConfigBuilder();
     }
 
 }

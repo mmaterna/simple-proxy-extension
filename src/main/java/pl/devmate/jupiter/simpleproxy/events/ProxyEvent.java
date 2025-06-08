@@ -13,24 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.devmate.jupiter.simpleproxy;
+package pl.devmate.jupiter.simpleproxy.events;
 
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.ProxySelector;
-
-public record SimpleProxyContext (int port) {
-
-    public Proxy getProxy() {
-        return new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", port));
-    }
-
-    public ProxySelector getProxySelector() {
-        return ProxySelector.of(getInetSocketAddress());
-    }
-
-    public InetSocketAddress getInetSocketAddress() {
-        return new InetSocketAddress("localhost", port);
-    }
-
+public record ProxyEvent (
+        ProxyEventRequest clientToProxyRequest,
+        ProxyEventResponse serverToProxyResponse
+) {
 }

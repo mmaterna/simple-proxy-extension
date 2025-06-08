@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.devmate.jupiter.simpleproxy;
+package pl.devmate.jupiter.simpleproxy.events;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+public record ProxyEventHttpHeaders (List<ProxyEventHttpHeader> headers) {
 
-@ExtendWith({SimpleProxyExtension.class})
-class SimpleHttpProxyExtensionUsingExtendWithTest {
-
-    @Test
-    void injectedContextAndStaticValuesShouldBeEqual(SimpleProxyExtension simpleProxyExtension) {
-        assertThat(SimpleProxy.runtimeInfo()).isEqualTo(simpleProxyExtension.runtimeInfo());
+    public ProxyEventHttpHeaders {
+        headers = List.copyOf(headers);
     }
 
-    @Test
-    void extensionShouldRegisterProxyOnNonZeroPort() {
-        assertThat(SimpleProxy.runtimeInfo().httpPort()).isGreaterThan(0);
+    public Optional<ProxyEventHttpHeader> findByName(String headerName) {
+        if (headerName == null) {
+            return Optional.empty();
+        }
+        return headers.stream()
+                .filter(header -> header.headerName().equalsIgnoreCase(headerName))
+                .findFirst();
     }
 
 }
