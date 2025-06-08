@@ -11,6 +11,19 @@ See tests for example usage.
 
 Register JUnit extension to start proxy server, and capture requests.
 
+### Maven
+
+Add library as test dependency
+
+```xml
+<dependency>
+    <groupId>pl.devmate.jupiter.extensions.simpleproxy</groupId>
+    <artifactId>simple-proxy-extension</artifactId>
+    <version>1.0.1</version>
+    <scope>test</scope>
+</dependency>
+```
+
 ### Register extension
 
 #### Register extension using SimpleProxyTest annotation
